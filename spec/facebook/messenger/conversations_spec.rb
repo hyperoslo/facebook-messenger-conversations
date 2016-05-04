@@ -1,11 +1,20 @@
 require 'spec_helper'
 
 describe Facebook::Messenger::Conversations do
-  it 'has a version number' do
-    expect(Facebook::Messenger::Conversations::VERSION).not_to be nil
-  end
+  describe '.get' do
+    context 'with new conversation' do
+      it 'creates a new conversation' do
+        conversation = described_class.get(1)
+        expect(conversation).to be_an(Facebook::Messenger::Conversations::Conversation)
+      end
+    end
 
-  it 'does something useful' do
-    expect(false).to eq(true)
+    context 'with existing conversation' do
+      it 'retrieves conversation' do
+        same = described_class.get(1)
+        conversation = described_class.get(1)
+        expect(conversation.id).to eq(same.id)
+      end
+    end
   end
 end
